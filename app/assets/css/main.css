@@ -1,0 +1,98 @@
+/* ==========================================================================
+   Inter — self-hosted variable font (weights 400/500/600/700)
+   Fetched from Google Fonts (css2 API, modern-browser UA) on 19/07/2026 and
+   served locally from /fonts/inter — no external font requests at runtime.
+   Google served the same latin-subset variable-font file for all four
+   requested static weight instances; hence one local file, four @font-face
+   declarations (mirrors Google's own output).
+   ========================================================================== */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter/Inter-Variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter/Inter-Variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/inter/Inter-Variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/inter/Inter-Variable.woff2") format("woff2");
+}
+
+@import "tailwindcss";
+
+@theme {
+  /* ---------- Neutrals (warm stone) ---------- */
+  --color-app-bg: #FBFAF7;          /* app background */
+  --color-surface: #FFFFFF;         /* cards, panels, table rows */
+  --color-surface-subtle: #F5F3EF;  /* section fills, table header, hover rows */
+  --color-surface-sunken: #EFECE6;  /* wells, code, drop zones */
+  --color-border: #E9E6DF;          /* decorative borders, dividers */
+  --color-border-strong: #8F897C;   /* input borders (AA 3:1 verified) */
+  --color-text: #26231E;            /* primary text */
+  --color-text-secondary: #6B665D;  /* secondary text (AA verified) */
+  --color-text-placeholder: #716C61;/* placeholders (AA verified) */
+  --color-text-disabled: #A29D91;   /* disabled (WCAG-exempt) */
+  --color-text-inverse: #FFFFFF;
+
+  /* ---------- Primary (evergreen) ---------- */
+  --color-primary: #0E6B5C;         /* actions, links, focus, selected */
+  --color-primary-hover: #0B5649;
+  --color-primary-active: #094439;
+  --color-primary-subtle: #E8F2F0;  /* selected row bg, subtle fills */
+  --color-primary-border: #B7D6D0;
+
+  /* ---------- Status ---------- */
+  --color-success: #166A2E;  --color-success-bg: #E7F4EA;  --color-success-border: #BCE0C6;
+  --color-warning: #7A5200;  --color-warning-bg: #FBF0DC;  --color-warning-border: #EBD5A8;
+  --color-danger:  #A83226;  --color-danger-bg:  #FBE9E7;  --color-danger-border:  #F0C4BF;
+  --color-danger-solid: #B5382B;    /* destructive buttons, error text on white */
+  --color-info:    #1C5DB8;  --color-info-bg:    #E7EFFB;  --color-info-border:    #C2D6F2;
+  --color-neutral-chip: #6B665D; --color-neutral-chip-bg: #F0EEE8; --color-neutral-chip-border: #DDD9CF;
+
+  /* ---------- Typography ---------- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --text-xs: 0.75rem;    --text-xs--line-height: 1rem;      /* 12/16 */
+  --text-sm: 0.8125rem;  --text-sm--line-height: 1.25rem;   /* 13/20 */
+  --text-base: 0.875rem; --text-base--line-height: 1.375rem;/* 14/22 — app default */
+  --text-md: 1rem;       --text-md--line-height: 1.5rem;    /* 16/24 — vendor portal default */
+  --text-lg: 1.125rem;   --text-lg--line-height: 1.625rem;  /* 18/26 */
+  --text-xl: 1.375rem;   --text-xl--line-height: 1.75rem;   /* 22/28 — page titles */
+  --text-2xl: 1.75rem;   --text-2xl--line-height: 2.25rem;  /* 28/36 — dashboard greeting */
+
+  /* ---------- Spacing (4px base) ---------- */
+  --spacing: 0.25rem;   /* Tailwind scale: 1=4px 2=8px 3=12px 4=16px 6=24px 8=32px 12=48px */
+
+  /* ---------- Radius ---------- */
+  --radius-sm: 4px;     /* chips, inputs' inner elements */
+  --radius-md: 6px;     /* buttons, inputs */
+  --radius-lg: 10px;    /* cards, panels */
+  --radius-xl: 14px;    /* modals */
+  --radius-full: 9999px;/* pills, avatars */
+
+  /* ---------- Shadows ---------- */
+  --shadow-card: 0 1px 2px rgb(38 35 30 / 0.06), 0 1px 3px rgb(38 35 30 / 0.08);
+  --shadow-overlay: 0 4px 12px rgb(38 35 30 / 0.10), 0 12px 32px rgb(38 35 30 / 0.14);
+
+  /* ---------- Motion ---------- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 120ms;    /* hovers, toggles */
+  --duration-base: 200ms;    /* dropdowns, tabs */
+  --duration-slow: 300ms;    /* modals, drawers */
+}
