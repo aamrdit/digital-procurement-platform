@@ -1,0 +1,61 @@
+{
+  "name": "digital-procurement-platform",
+  "private": true,
+  "packageManager": "pnpm@11.14.0",
+  "engines": {
+    "node": "24.18.0",
+    "pnpm": "11.14.0"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "typecheck": "nuxt typecheck",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:rls": "vitest run tests/rls",
+    "test:golden": "vitest run tests/golden",
+    "db:migrate": "supabase db push",
+    "db:types": "supabase gen types typescript --local > shared/types/database.ts",
+    "db:seed": "supabase db reset"
+  },
+  "dependencies": {
+    "nuxt": "4.4.8",
+    "vue": "3.5.40",
+    "vue-router": "5.2.0",
+    "pinia": "4.0.2",
+    "@pinia/nuxt": "1.0.1",
+    "tailwindcss": "4.3.3",
+    "@tailwindcss/vite": "4.3.3",
+    "primevue": "4.5.5",
+    "@primevue/nuxt-module": "4.5.5",
+    "@primevue/themes": "4.5.4",
+    "primeicons": "8.0.0",
+    "@nuxtjs/supabase": "2.0.9",
+    "@supabase/supabase-js": "2.110.7",
+    "zod": "4.4.3",
+    "nodemailer": "9.0.3",
+    "@google/genai": "2.12.0",
+    "pdfjs-dist": "6.1.200",
+    "chart.js": "4.5.1",
+    "vue-chartjs": "5.3.4",
+    "@vueuse/core": "14.3.0",
+    "@vueuse/nuxt": "14.3.0",
+    "date-fns": "4.4.0",
+    "vee-validate": "4.15.1",
+    "@vee-validate/zod": "4.15.1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "4.1.10",
+    "@nuxt/test-utils": "4.0.3",
+    "@vue/test-utils": "2.4.11",
+    "happy-dom": "20.10.6",
+    "@playwright/test": "1.61.1",
+    "eslint": "9.39.5",
+    "@nuxt/eslint": "1.16.0",
+    "eslint-config-prettier": "10.1.8",
+    "prettier": "3.9.5",
+    "supabase": "2.109.1"
+  }
+}
