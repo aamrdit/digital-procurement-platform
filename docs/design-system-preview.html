@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design system preview — AI Procurement Intelligence Platform</title>
+<style>
+/* ==========================================================================
+   TOKENS — verbatim from Content & Design Guidelines §3.1 (light)
+   Dark values AA-verified computationally 18/07/2026
+   ========================================================================== */
+:root {
+  --color-app-bg:#FBFAF7; --color-surface:#FFFFFF; --color-surface-subtle:#F5F3EF;
+  --color-surface-sunken:#EFECE6; --color-border:#E9E6DF; --color-border-strong:#8F897C;
+  --color-text:#26231E; --color-text-secondary:#6B665D; --color-text-placeholder:#716C61;
+  --color-text-disabled:#A29D91; --color-text-inverse:#FFFFFF;
+  --color-primary:#0E6B5C; --color-primary-hover:#0B5649; --color-primary-active:#094439;
+  --color-primary-subtle:#E8F2F0; --color-primary-border:#B7D6D0; --color-primary-text:#0E6B5C;
+  --color-success:#166A2E; --color-success-bg:#E7F4EA; --color-success-border:#BCE0C6;
+  --color-warning:#7A5200; --color-warning-bg:#FBF0DC; --color-warning-border:#EBD5A8;
+  --color-danger:#A83226;  --color-danger-bg:#FBE9E7;  --color-danger-border:#F0C4BF;
+  --color-danger-solid:#B5382B;
+  --color-info:#1C5DB8;    --color-info-bg:#E7EFFB;    --color-info-border:#C2D6F2;
+  --color-neutral-chip:#6B665D; --color-neutral-chip-bg:#F0EEE8; --color-neutral-chip-border:#DDD9CF;
+  --shadow-card:0 1px 2px rgb(38 35 30/.06),0 1px 3px rgb(38 35 30/.08);
+  --shadow-overlay:0 4px 12px rgb(38 35 30/.10),0 12px 32px rgb(38 35 30/.14);
+  --backdrop:rgb(38 35 30/.4);
+  --radius-sm:4px; --radius-md:6px; --radius-lg:10px; --radius-xl:14px; --radius-full:9999px;
+  --ease:cubic-bezier(.2,0,0,1); --dur-fast:120ms; --dur-base:200ms; --dur-slow:300ms;
+  --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+[data-theme="dark"] {
+  --color-app-bg:#1B1916; --color-surface:#23201C; --color-surface-subtle:#2B2823;
+  --color-surface-sunken:#181613; --color-border:#3A362F; --color-border-strong:#7A7466;
+  --color-text:#F0EDE7; --color-text-secondary:#ADA79A; --color-text-placeholder:#98927F;
+  --color-text-disabled:#6E685C; --color-text-inverse:#FFFFFF;
+  --color-primary:#0E6B5C; --color-primary-hover:#128069; --color-primary-active:#0B5649;
+  --color-primary-subtle:#1C2E2A; --color-primary-border:#2E4A44; --color-primary-text:#57B3A0;
+  --color-success:#6EC487; --color-success-bg:#1C2F22; --color-success-border:#2E4A38;
+  --color-warning:#D9A945; --color-warning-bg:#332A16; --color-warning-border:#4E4124;
+  --color-danger:#E88A7D;  --color-danger-bg:#38201D;  --color-danger-border:#54322E;
+  --color-danger-solid:#D96A5C;
+  --color-info:#82AEE8;    --color-info-bg:#1D2A3D;    --color-info-border:#2E4260;
+  --color-neutral-chip:#ADA79A; --color-neutral-chip-bg:#2B2823; --color-neutral-chip-border:#3A362F;
+  --shadow-card:0 1px 2px rgb(0 0 0/.3),0 1px 3px rgb(0 0 0/.35);
+  --shadow-overlay:0 4px 12px rgb(0 0 0/.4),0 12px 32px rgb(0 0 0/.5);
+  --backdrop:rgb(0 0 0/.55);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:var(--font);font-size:.875rem;line-height:1.375rem;
+  color:var(--color-text);background:var(--color-app-bg);
+  transition:background var(--dur-base) var(--ease),color var(--dur-base) var(--ease);
+}
+h1{font-size:1.375rem;line-height:1.75rem;font-weight:600}
+h2{font-size:1.125rem;line-height:1.625rem;font-weight:600}
+h3{font-size:1rem;line-height:1.5rem;font-weight:600}
+a{color:var(--color-primary-text);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--color-primary-text);outline-offset:2px;border-radius:var(--radius-sm)}
+.icon{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon-sm{width:14px;height:14px}
+
+/* ==========================================================================
+   SHELL — sidebar 260px, header 56px
+   ========================================================================== */
+.shell{display:flex;min-height:100vh}
+.sidebar{
+  width:260px;flex:none;background:var(--color-app-bg);border-right:1px solid var(--color-border);
+  padding:12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;
+}
+.logo-row{display:flex;align-items:center;gap:10px;padding:8px 10px 20px}
+.logo-tile{width:32px;height:32px;border-radius:8px;background:var(--color-primary);color:#fff;
+  display:grid;place-items:center;font-weight:600;font-size:.875rem}
+.logo-name{font-weight:600;font-size:.875rem}
+.nav-item{
+  display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:var(--radius-md);
+  color:var(--color-text);font-size:.8125rem;position:relative;border:none;background:none;width:100%;text-align:left;
+  transition:background var(--dur-fast) var(--ease);
+}
+.nav-item:hover{background:var(--color-surface-subtle)}
+.nav-item.active{background:var(--color-primary-subtle);color:var(--color-primary-text);font-weight:500}
+.nav-item.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;background:var(--color-primary);border-radius:0 2px 2px 0}
+.nav-item .icon{width:18px;height:18px;color:var(--color-text-secondary)}
+.nav-item.active .icon{color:var(--color-primary-text)}
+.sidebar-footer{margin-top:auto;padding:10px;font-size:.75rem;color:var(--color-text-secondary)}
+
+.main{flex:1;min-width:0}
+.header{
+  height:56px;background:var(--color-app-bg);border-bottom:1px solid var(--color-border);
+  display:flex;align-items:center;gap:16px;padding:0 24px;position:sticky;top:0;z-index:30;
+}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--color-text-secondary);flex:1;min-width:0}
+.crumbs .sep{color:var(--color-border-strong)}
+.crumbs .current{color:var(--color-text);font-weight:500}
+.search{
+  display:flex;align-items:center;gap:8px;height:36px;width:260px;padding:0 12px;
+  background:var(--color-surface);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);
+  color:var(--color-text-placeholder);font-size:.8125rem;
+}
+.hdr-btn{width:36px;height:36px;display:grid;place-items:center;border:none;background:none;
+  border-radius:var(--radius-md);color:var(--color-text-secondary);position:relative}
+.hdr-btn:hover{background:var(--color-surface-subtle)}
+.bell-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;
+  background:var(--color-danger-solid);border:2px solid var(--color-app-bg)}
+.avatar{width:32px;height:32px;border-radius:var(--radius-full);background:var(--color-primary-subtle);
+  color:var(--color-primary-text);display:grid;place-items:center;font-size:.75rem;font-weight:600}
+/* theme toggle */
+.theme-toggle{
+  display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:var(--radius-full);
+  border:1px solid var(--color-border-strong);background:var(--color-surface);color:var(--color-text);
+  font-size:.75rem;font-weight:500;transition:background var(--dur-fast) var(--ease);
+}
+.theme-toggle:hover{background:var(--color-surface-subtle)}
+
+.content{max-width:1200px;margin:0 auto;padding:32px 24px 96px}
+.page-title-block{margin-bottom:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.meta-line{color:var(--color-text-secondary);font-size:.8125rem;margin-bottom:32px}
+
+.section{margin-top:48px}
+.section>h2{padding-bottom:10px;border-bottom:1px solid var(--color-border);margin-bottom:20px}
+.section .sub{font-size:.75rem;color:var(--color-text-secondary);margin:-14px 0 20px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.label-xs{font-size:.75rem;color:var(--color-text-secondary);font-weight:500;margin-bottom:8px;display:block}
+
+/* ==========================================================================
+   SWATCHES & TYPE
+   ========================================================================== */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.swatch{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:var(--color-surface)}
+.swatch .chip-color{height:56px}
+.swatch .info{padding:8px 10px;font-size:.6875rem;line-height:1rem;color:var(--color-text-secondary)}
+.swatch .info strong{display:block;color:var(--color-text);font-size:.75rem}
+.type-row{display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid var(--color-border)}
+.type-row:last-child{border-bottom:none}
+.type-meta{width:190px;flex:none;font-size:.75rem;color:var(--color-text-secondary)}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:36px;padding:0 16px;border-radius:var(--radius-md);
+  font-size:.8125rem;font-weight:500;border:1px solid transparent;
+  transition:background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease);
+}
+.btn-primary{background:var(--color-primary);color:var(--color-text-inverse)}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-primary:active{background:var(--color-primary-active)}
+.btn-secondary{background:var(--color-surface);color:var(--color-text);border-color:var(--color-border-strong)}
+.btn-secondary:hover{background:var(--color-surface-subtle)}
+.btn-ghost{background:transparent;color:var(--color-text-secondary)}
+.btn-ghost:hover{background:var(--color-surface-subtle)}
+.btn-destructive{background:var(--color-danger-solid);color:#fff}
+.btn-destructive:hover{filter:brightness(.92)}
+.btn-link{background:none;border:none;color:var(--color-primary-text);padding:0;height:auto}
+.btn-link:hover{text-decoration:underline}
+.btn-sm{height:30px;padding:0 12px;font-size:.75rem}
+.btn-lg{height:44px;padding:0 20px;font-size:1rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-icon{width:36px;padding:0}
+.spinner{width:14px;height:14px;border:2px solid rgb(255 255 255/.35);border-top-color:#fff;
+  border-radius:50%;animation:spin .7s linear infinite}
+.spinner-dark{border-color:var(--color-border);border-top-color:var(--color-info)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ==========================================================================
+   CHIPS
+   ========================================================================== */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:var(--radius-full);
+  font-size:.75rem;font-weight:500;border:1px solid;line-height:1rem;white-space:nowrap;
+}
+.chip-neutral{color:var(--color-neutral-chip);background:var(--color-neutral-chip-bg);border-color:var(--color-neutral-chip-border)}
+.chip-info{color:var(--color-info);background:var(--color-info-bg);border-color:var(--color-info-border)}
+.chip-success{color:var(--color-success);background:var(--color-success-bg);border-color:var(--color-success-border)}
+.chip-warning{color:var(--color-warning);background:var(--color-warning-bg);border-color:var(--color-warning-border)}
+.chip-danger{color:var(--color-danger);background:var(--color-danger-bg);border-color:var(--color-danger-border)}
+.chip-primary{color:var(--color-primary-text);background:var(--color-primary-subtle);border-color:var(--color-primary-border)}
+.chip-group{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip-domain{margin-bottom:14px}
+.chip-domain .label-xs{margin-bottom:6px}
+
+/* ==========================================================================
+   FORMS
+   ========================================================================== */
+.field{margin-bottom:20px;max-width:360px}
+.field label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:6px}
+.field .req{color:var(--color-danger-solid)}
+.input,select.input,textarea.input{
+  width:100%;height:40px;padding:0 12px;font:inherit;font-size:.8125rem;color:var(--color-text);
+  background:var(--color-surface);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);
+  transition:border-color var(--dur-fast) var(--ease);
+}
+textarea.input{height:auto;min-height:88px;padding:10px 12px;resize:vertical}
+.input::placeholder{color:var(--color-text-placeholder)}
+.input:focus{outline:none;border-color:var(--color-primary-text);box-shadow:0 0 0 1px var(--color-primary-text)}
+.input:disabled{background:var(--color-surface-subtle);color:var(--color-text-disabled);cursor:not-allowed}
+.input.error{border-color:var(--color-danger-solid)}
+.help{font-size:.75rem;color:var(--color-text-secondary);margin-top:6px}
+.err-msg{font-size:.75rem;color:var(--color-danger-solid);margin-top:6px}
+.input-prefix{display:flex;align-items:center}
+.input-prefix .prefix{height:40px;display:grid;place-items:center;padding:0 12px;background:var(--color-surface-subtle);
+  border:1px solid var(--color-border-strong);border-right:none;border-radius:var(--radius-md) 0 0 var(--radius-md);
+  font-size:.8125rem;color:var(--color-text-secondary)}
+.input-prefix .input{border-radius:0 var(--radius-md) var(--radius-md) 0}
+/* custom dropdown */
+.dd{position:relative;max-width:360px}
+.dd-btn{width:100%;height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;
+  background:var(--color-surface);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);
+  font-size:.8125rem;color:var(--color-text)}
+.dd-btn .ph{color:var(--color-text-placeholder)}
+.dd-menu{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:40;background:var(--color-surface);
+  border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-overlay);
+  padding:4px;display:none}
+.dd.open .dd-menu{display:block}
+.dd-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:none;background:none;
+  padding:8px 10px;border-radius:var(--radius-sm);font-size:.8125rem;color:var(--color-text)}
+.dd-item:hover{background:var(--color-surface-subtle)}
+.dd-item.selected{background:var(--color-primary-subtle);color:var(--color-primary-text);font-weight:500}
+/* checks & radios */
+.check-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.8125rem}
+.check-row input{width:16px;height:16px;accent-color:var(--color-primary)}
+/* file drop */
+.dropzone{
+  border:1.5px dashed var(--color-border-strong);border-radius:var(--radius-lg);
+  background:var(--color-surface-sunken);padding:32px;text-align:center;color:var(--color-text-secondary);
+  font-size:.8125rem;max-width:520px;
+}
+.dropzone .icon{width:24px;height:24px;margin:0 auto 8px;display:block;color:var(--color-text-secondary)}
+.file-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--color-border);
+  border-radius:var(--radius-md);background:var(--color-surface);max-width:520px;margin-top:10px;font-size:.8125rem}
+.file-row .bar{flex:1;height:6px;border-radius:3px;background:var(--color-surface-sunken);overflow:hidden}
+.file-row .bar>span{display:block;height:100%;background:var(--color-primary);width:64%}
+.file-row .size{color:var(--color-text-secondary);font-size:.75rem}
+
+/* ==========================================================================
+   TABLE
+   ========================================================================== */
+.table-wrap{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:var(--color-surface)}
+table{width:100%;border-collapse:collapse;font-size:.8125rem}
+thead th{
+  text-align:left;font-size:.6875rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--color-text-secondary);background:var(--color-surface-subtle);
+  padding:8px 12px;border-bottom:1px solid var(--color-border);
+}
+tbody td{padding:8px 12px;height:40px;border-bottom:1px solid var(--color-border)}
+tbody tr{cursor:pointer;transition:background var(--dur-fast) var(--ease)}
+tbody tr:hover{background:var(--color-surface-subtle)}
+tbody tr.selected{background:var(--color-primary-subtle)}
+tbody tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tfoot{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
+  border-top:1px solid var(--color-border);font-size:.75rem;color:var(--color-text-secondary)}
+.pager{display:flex;gap:4px}
+.pager button{width:28px;height:28px;border-radius:var(--radius-sm);border:1px solid var(--color-border);
+  background:var(--color-surface);color:var(--color-text-secondary);font-size:.75rem}
+.pager button.on{background:var(--color-primary);border-color:var(--color-primary);color:#fff}
+
+/* ==========================================================================
+   TABS · STEPPER · CARDS
+   ========================================================================== */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--color-border)}
+.tab{padding:10px 14px;border:none;background:none;font-size:.8125rem;color:var(--color-text-secondary);
+  border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--color-text)}
+.tab.active{color:var(--color-text);font-weight:500;border-bottom-color:var(--color-primary)}
+.stepper{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:10px}
+.step .dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:600}
+.step.done .dot{background:var(--color-primary);color:#fff}
+.step.current .dot{border:2px solid var(--color-primary);color:var(--color-primary-text)}
+.step.todo .dot{border:1.5px solid var(--color-border-strong);color:var(--color-text-secondary)}
+.step .s-label{font-size:.8125rem}
+.step.todo .s-label{color:var(--color-text-secondary)}
+.step-line{width:48px;height:2px;background:var(--color-border);margin:0 12px}
+.step-line.done{background:var(--color-primary)}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:20px}
+.card h3{margin-bottom:4px}
+.card .card-sub{font-size:.75rem;color:var(--color-text-secondary);margin-bottom:16px}
+.stat{font-size:1.75rem;line-height:2.25rem;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* score & extraction */
+.score-row{display:flex;align-items:center;gap:12px;padding:8px 0;font-size:.8125rem}
+.score-track{width:60px;height:6px;border-radius:3px;background:var(--color-surface-sunken);overflow:hidden}
+.score-track>span{display:block;height:100%;background:var(--color-primary)}
+.ai-note{color:var(--color-text-secondary);font-style:italic;font-size:.75rem}
+.xfield{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--color-border);font-size:.8125rem}
+.xfield:last-child{border-bottom:none}
+.xfield.unconfirmed{background:var(--color-surface-subtle)}
+.amber-dot{width:8px;height:8px;border-radius:50%;background:var(--color-warning);flex:none}
+.green-check{color:var(--color-success);flex:none}
+.xfield .f-label{width:150px;flex:none;color:var(--color-text-secondary)}
+.xfield .f-actions{margin-left:auto;display:flex;gap:4px;align-items:center}
+
+/* ==========================================================================
+   BANNERS · TOASTS · MODALS · TOOLTIP · EMPTY · SKELETON
+   ========================================================================== */
+.banner{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--radius-lg);
+  border:1px solid var(--color-warning-border);background:var(--color-warning-bg);color:var(--color-warning);font-size:.8125rem}
+.banner .b-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.toast-region{position:fixed;top:68px;right:24px;z-index:50;display:flex;flex-direction:column;gap:10px;width:360px;max-width:calc(100vw - 48px)}
+.toast{display:flex;gap:10px;align-items:flex-start;background:var(--color-surface);border:1px solid var(--color-border);
+  border-left:3px solid var(--color-info);border-radius:var(--radius-lg);box-shadow:var(--shadow-overlay);
+  padding:12px 14px;font-size:.8125rem;animation:slidein var(--dur-slow) var(--ease)}
+.toast.success{border-left-color:var(--color-success)}.toast.success .icon{color:var(--color-success)}
+.toast.danger{border-left-color:var(--color-danger-solid)}.toast.danger .icon{color:var(--color-danger-solid)}
+.toast .icon{color:var(--color-info);margin-top:1px}
+@keyframes slidein{from{transform:translateX(16px);opacity:0}to{transform:none;opacity:1}}
+.modal-backdrop{position:fixed;inset:0;background:var(--backdrop);z-index:60;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--color-surface);border-radius:var(--radius-xl);box-shadow:var(--shadow-overlay);
+  width:100%;padding:24px;z-index:70}
+.modal.sm{max-width:440px}.modal.md{max-width:640px}
+.modal h3{margin-bottom:8px}
+.modal p{color:var(--color-text-secondary);font-size:.8125rem;margin-bottom:8px}
+.modal .m-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.tt{position:relative;display:inline-flex}
+.tt .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:80;
+  background:var(--color-text);color:var(--color-app-bg);font-size:.75rem;padding:5px 10px;border-radius:var(--radius-sm);
+  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--dur-fast) var(--ease)}
+.tt:hover .tip,.tt:focus-within .tip{opacity:1}
+.empty{border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface);
+  padding:40px 24px;text-align:center}
+.empty p{color:var(--color-text-secondary);font-size:.8125rem;margin-bottom:16px;max-width:420px;margin-inline:auto}
+.skel{background:var(--color-surface-sunken);border-radius:var(--radius-sm);animation:shimmer 1.5s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:1}50%{opacity:.6}}
+.skel-row{display:flex;gap:12px;padding:10px 12px;border-bottom:1px solid var(--color-border)}
+.skel-row:last-child{border-bottom:none}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0ms!important;transition-duration:100ms!important}}
+@media (max-width:900px){.sidebar{display:none}.search{display:none}}
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-check-sq" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 7h14"/><path d="M5 7l-2.5 5a3 3 0 0 0 5 0L5 7zM19 7l-2.5 5a3 3 0 0 0 5 0L19 7z"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 5a3.5 3.5 0 0 1 0 6.7M17.5 14.7c2.2.7 3.6 2.4 4 5.3"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19l-4 1z"/></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3h-4l-.4 2.5a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.5h4l.4-2.5a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3L2.5 20h19L12 3z"/><path d="M12 10v4M12 17v.5"/></symbol>
+  <symbol id="i-kebab" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></symbol>
+</svg>
+
+<div class="shell">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="logo-row"><div class="logo-tile">P</div><div class="logo-name">Procurement</div></div>
+    <button class="nav-item"><svg class="icon"><use href="#i-grid"/></svg>Dashboard</button>
+    <button class="nav-item"><svg class="icon"><use href="#i-check-sq"/></svg>My actions</button>
+    <button class="nav-item"><svg class="icon"><use href="#i-doc"/></svg>Requirements</button>
+    <button class="nav-item"><svg class="icon"><use href="#i-scale"/></svg>Evaluations</button>
+    <button class="nav-item active"><svg class="icon"><use href="#i-people"/></svg>Suppliers</button>
+    <button class="nav-item"><svg class="icon"><use href="#i-pen"/></svg>Contracts</button>
+    <button class="nav-item"><svg class="icon"><use href="#i-cog"/></svg>Admin</button>
+    <div class="sidebar-footer">Design system preview · v1.0</div>
+  </aside>
+
+  <div class="main">
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <nav class="crumbs"><a href="#">Suppliers</a><span class="sep">/</span><span class="current">Design system preview</span></nav>
+      <div class="search"><svg class="icon icon-sm"><use href="#i-search"/></svg>Search suppliers</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+        <svg class="icon icon-sm" id="themeIcon"><use href="#i-moon"/></svg><span id="themeLabel">Dark</span>
+      </button>
+      <button class="hdr-btn" aria-label="Notifications"><svg class="icon"><use href="#i-bell"/></svg><span class="bell-dot"></span></button>
+      <div class="avatar">PM</div>
+    </header>
+
+    <main class="content">
+      <div class="page-title-block"><h1>Design system preview</h1><span class="chip chip-info">Draft v1.0</span></div>
+      <p class="meta-line">Every component from the Content &amp; Design Guidelines, rendered with the verified tokens · Warm stone + evergreen · Inter · 18/07/2026</p>
+
+      <!-- ============ COLOURS ============ -->
+      <section class="section"><h2>Colour tokens</h2>
+        <div class="swatches">
+          <div class="swatch"><div class="chip-color" style="background:var(--color-primary)"></div><div class="info"><strong>Primary</strong>evergreen — actions, links</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-primary-subtle)"></div><div class="info"><strong>Primary subtle</strong>selected states</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-app-bg);border-bottom:1px solid var(--color-border)"></div><div class="info"><strong>App background</strong>warm stone</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-surface-subtle)"></div><div class="info"><strong>Surface subtle</strong>headers, hovers</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-success)"></div><div class="info"><strong>Success</strong>compliant, awarded</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-warning)"></div><div class="info"><strong>Warning</strong>expiring, pending</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-danger-solid)"></div><div class="info"><strong>Danger</strong>expired, destructive</div></div>
+          <div class="swatch"><div class="chip-color" style="background:var(--color-info)"></div><div class="info"><strong>Info</strong>in-progress states</div></div>
+        </div>
+      </section>
+
+      <!-- ============ TYPOGRAPHY ============ -->
+      <section class="section"><h2>Typography — Inter</h2>
+        <div class="type-row"><span class="type-meta">2xl · 28/36 · semibold</span><span style="font-size:1.75rem;line-height:2.25rem;font-weight:600">Good morning, Priya</span></div>
+        <div class="type-row"><span class="type-meta">xl · 22/28 · semibold</span><span style="font-size:1.375rem;line-height:1.75rem;font-weight:600">Autumn F&amp;B sourcing</span></div>
+        <div class="type-row"><span class="type-meta">lg · 18/26 · semibold</span><span style="font-size:1.125rem;font-weight:600">Section heading</span></div>
+        <div class="type-row"><span class="type-meta">base · 14/22 · regular</span><span>Body text — the app default. Plain-spoken, confident, lightly warm.</span></div>
+        <div class="type-row"><span class="type-meta">sm · 13/20 · regular</span><span style="font-size:.8125rem">Table and control text.</span></div>
+        <div class="type-row"><span class="type-meta">xs · 12/16 · secondary</span><span style="font-size:.75rem;color:var(--color-text-secondary)">Helper text, metadata, timestamps — 11/07/2026 17:00</span></div>
+        <div class="type-row"><span class="type-meta">tabular numerals</span><span style="font-variant-numeric:tabular-nums">£84,250.00 &nbsp; £1,190.50 &nbsp; £312,008.75</span></div>
+      </section>
+
+      <!-- ============ BUTTONS ============ -->
+      <section class="section"><h2>Buttons</h2>
+        <span class="label-xs">Variants</span>
+        <div class="row">
+          <button class="btn btn-primary"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Add supplier</button>
+          <button class="btn btn-secondary">Import CSV</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-destructive">Archive supplier</button>
+          <button class="btn btn-link">View evaluation</button>
+        </div>
+        <span class="label-xs">Sizes</span>
+        <div class="row">
+          <button class="btn btn-primary btn-sm">Small 30px</button>
+          <button class="btn btn-primary">Medium 36px</button>
+          <button class="btn btn-primary btn-lg">Large 44px — vendor portal</button>
+        </div>
+        <span class="label-xs">States</span>
+        <div class="row">
+          <button class="btn btn-primary" disabled>Disabled</button>
+          <button class="btn btn-secondary" disabled>Disabled</button>
+          <button class="btn btn-primary" id="loadingDemo">Open for submissions</button>
+          <div class="tt"><button class="btn btn-ghost btn-icon" aria-label="More actions"><svg class="icon"><use href="#i-kebab"/></svg></button><span class="tip">More actions</span></div>
+          <span style="font-size:.75rem;color:var(--color-text-secondary)">← click "Open for submissions" for the loading state · hover the icon button for its mandatory tooltip</span>
+        </div>
+      </section>
+
+      <!-- ============ STATUS CHIPS ============ -->
+      <section class="section"><h2>Status chips — the complete legal mapping</h2>
+        <div class="chip-domain"><span class="label-xs">Evaluation stage</span><div class="chip-group">
+          <span class="chip chip-neutral">Draft</span><span class="chip chip-info">Open for submissions</span><span class="chip chip-info">Under evaluation</span><span class="chip chip-primary">Shortlisted</span><span class="chip chip-warning">In approval</span><span class="chip chip-success">Awarded</span><span class="chip chip-neutral">Closed — no award</span>
+        </div></div>
+        <div class="chip-domain"><span class="label-xs">Extraction</span><div class="chip-group">
+          <span class="chip chip-neutral">Queued</span><span class="chip chip-info"><span class="spinner spinner-dark" style="width:11px;height:11px"></span>Processing</span><span class="chip chip-success">Ready</span><span class="chip chip-warning">Failed — manual</span><span class="chip chip-primary">Reviewed</span>
+        </div></div>
+        <div class="chip-domain"><span class="label-xs">AI confidence — always chip + word, never colour alone</span><div class="chip-group">
+          <span class="chip chip-success">High</span><span class="chip chip-warning">Medium</span><span class="chip chip-danger">Low</span>
+        </div></div>
+        <div class="chip-domain"><span class="label-xs">Compliance — document / supplier roll-up</span><div class="chip-group">
+          <span class="chip chip-success">Verified</span><span class="chip chip-info">Submitted</span><span class="chip chip-warning">Expiring — 43 days</span><span class="chip chip-neutral">Missing</span><span class="chip chip-danger">Expired</span>
+          <span style="color:var(--color-border-strong)">·</span>
+          <span class="chip chip-success">Compliant</span><span class="chip chip-warning">At risk</span><span class="chip chip-danger">Non-compliant</span>
+        </div></div>
+        <div class="chip-domain"><span class="label-xs">Contract</span><div class="chip-group">
+          <span class="chip chip-neutral">Draft</span><span class="chip chip-success">Active</span><span class="chip chip-warning">Expiring — 90 days</span><span class="chip chip-info">In renewal</span><span class="chip chip-danger">Expired</span><span class="chip chip-neutral">Terminated</span>
+        </div></div>
+        <div class="chip-domain"><span class="label-xs">Supplier status / approval / vendor-facing outcome</span><div class="chip-group">
+          <span class="chip chip-neutral">Prospective</span><span class="chip chip-info">Under evaluation</span><span class="chip chip-success">Active</span><span class="chip chip-warning">Suspended</span>
+          <span style="color:var(--color-border-strong)">·</span>
+          <span class="chip chip-warning">Pending</span><span class="chip chip-success">Approved</span><span class="chip chip-danger">Rejected</span><span class="chip chip-info">Changes requested</span>
+          <span style="color:var(--color-border-strong)">·</span>
+          <span class="chip chip-neutral">Unsuccessful — never red</span>
+        </div></div>
+      </section>
+
+      <!-- ============ FORMS ============ -->
+      <section class="section"><h2>Form controls</h2>
+        <div class="grid-2">
+          <div>
+            <div class="field"><label>Supplier name <span class="req">*</span></label><input class="input" placeholder="e.g. Fieldgate Produce Ltd"></div>
+            <div class="field"><label>Category</label>
+              <div class="dd" id="dd1">
+                <button class="dd-btn" aria-haspopup="listbox"><span class="ph" id="dd1val">Select a category</span><svg class="icon icon-sm"><use href="#i-chev"/></svg></button>
+                <div class="dd-menu" role="listbox">
+                  <button class="dd-item">F&amp;B — Food</button>
+                  <button class="dd-item">F&amp;B — Beverage, wine &amp; spirits</button>
+                  <button class="dd-item">FF&amp;E</button>
+                  <button class="dd-item">Laundry &amp; linen</button>
+                  <button class="dd-item">Maintenance &amp; contractors</button>
+                </div>
+              </div>
+            </div>
+            <div class="field"><label>Estimated annual value</label>
+              <div class="input-prefix"><span class="prefix">£</span><input class="input" value="84,000.00" style="font-variant-numeric:tabular-nums"></div>
+              <p class="help">Used to compute the approval route</p>
+            </div>
+            <div class="field"><label>Response deadline <span class="req">*</span></label><input class="input" value="03/09/2026" style="max-width:180px"><p class="help">DD/MM/YYYY</p></div>
+          </div>
+          <div>
+            <div class="field"><label>Registration number</label><input class="input error" value="AB12"><p class="err-msg">Registration numbers have 8 characters. This one has 4.</p></div>
+            <div class="field"><label>Notes (optional)</label><textarea class="input" placeholder="Anything the evaluation team should know"></textarea></div>
+            <div class="field"><label>Internal contact</label><input class="input" value="Read-only when archived" disabled></div>
+            <div class="field"><label>Sites served</label>
+              <div class="check-row"><input type="checkbox" id="c1" checked><label for="c1" style="margin:0;font-weight:400">The Mill House</label></div>
+              <div class="check-row"><input type="checkbox" id="c2"><label for="c2" style="margin:0;font-weight:400">Harbour Rooms</label></div>
+              <div class="check-row"><input type="radio" name="r" id="r1" checked><label for="r1" style="margin:0;font-weight:400">Group-wide agreement</label></div>
+              <div class="check-row"><input type="radio" name="r" id="r2"><label for="r2" style="margin:0;font-weight:400">Site-specific</label></div>
+            </div>
+          </div>
+        </div>
+        <span class="label-xs">File upload</span>
+        <div class="dropzone"><svg class="icon"><use href="#i-upload"/></svg>Drag files here or <a href="#">browse</a><br>PDF, Word (DOCX) and Excel (XLSX) · up to 50 MB each</div>
+        <div class="file-row"><svg class="icon icon-sm"><use href="#i-doc"/></svg>proposal-fieldgate.pdf<span class="size">3.2 MB</span><div class="bar"><span></span></div><button class="btn btn-ghost btn-icon btn-sm" aria-label="Remove file"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div>
+        <div class="file-row" style="border-color:var(--color-danger-border)"><svg class="icon icon-sm" style="color:var(--color-danger-solid)"><use href="#i-warn"/></svg><span>pricing-master.xlsx</span><span class="err-msg" style="margin:0">This file is over 50&nbsp;MB. Compress it or split it into parts, then upload again.</span></div>
+      </section>
+
+      <!-- ============ TABLE ============ -->
+      <section class="section"><h2>Data table — compact density</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Categories</th><th>Status</th><th>Compliance</th><th style="text-align:right">Active contracts</th><th></th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:500">Fieldgate Produce Ltd</td><td><span class="chip chip-neutral">F&amp;B — Food</span></td><td><span class="chip chip-success">Active</span></td><td><span class="chip chip-success">Compliant</span></td><td class="num">3</td><td style="text-align:right"><svg class="icon icon-sm" style="color:var(--color-text-secondary)"><use href="#i-kebab"/></svg></td></tr>
+              <tr class="selected"><td style="font-weight:500">Harbour Linen Services</td><td><span class="chip chip-neutral">Laundry &amp; linen</span></td><td><span class="chip chip-info">Under evaluation</span></td><td><span class="chip chip-warning">At risk</span></td><td class="num">1</td><td style="text-align:right"><svg class="icon icon-sm" style="color:var(--color-text-secondary)"><use href="#i-kebab"/></svg></td></tr>
+              <tr><td style="font-weight:500">Northbank Maintenance Co</td><td><span class="chip chip-neutral">Contractors</span></td><td><span class="chip chip-warning">Suspended</span></td><td><span class="chip chip-danger">Non-compliant</span></td><td class="num">—</td><td style="text-align:right"><svg class="icon icon-sm" style="color:var(--color-text-secondary)"><use href="#i-kebab"/></svg></td></tr>
+            </tbody>
+          </table>
+          <div class="tfoot"><span>Showing 1–3 of 312</span><div class="pager"><button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>›</button></div></div>
+        </div>
+      </section>
+
+      <!-- ============ NAV COMPONENTS ============ -->
+      <section class="section"><h2>Tabs · stepper</h2>
+        <div class="tabs" style="margin-bottom:28px">
+          <button class="tab active">Overview</button><button class="tab">Submissions</button><button class="tab">Scoring</button><button class="tab">Comparison</button><button class="tab">Approval</button><button class="tab">Activity</button>
+        </div>
+        <div class="stepper">
+          <div class="step done"><span class="dot"><svg class="icon icon-sm" style="stroke-width:2.4"><use href="#i-check"/></svg></span><span class="s-label">Details</span></div><span class="step-line done"></span>
+          <div class="step done"><span class="dot"><svg class="icon icon-sm" style="stroke-width:2.4"><use href="#i-check"/></svg></span><span class="s-label">Scoring</span></div><span class="step-line done"></span>
+          <div class="step current"><span class="dot">3</span><span class="s-label">Compliance</span></div><span class="step-line"></span>
+          <div class="step todo"><span class="dot">4</span><span class="s-label">Questionnaire</span></div><span class="step-line"></span>
+          <div class="step todo"><span class="dot">5</span><span class="s-label">Suppliers</span></div>
+        </div>
+      </section>
+
+      <!-- ============ CARDS / SCORES / EXTRACTION ============ -->
+      <section class="section"><h2>Cards · scores · extracted fields</h2>
+        <div class="grid-2">
+          <div class="card"><h3>Contracts expiring</h3><p class="card-sub">Next 90 days, all sites</p><div class="stat">7</div>
+            <div style="margin-top:12px"><span class="chip chip-warning">3 within notice window</span></div></div>
+          <div class="card"><h3>Scoring — Quality of produce <span style="color:var(--color-text-secondary);font-weight:400;font-size:.75rem">(weighting 30%)</span></h3><p class="card-sub">Confirmed score · AI-proposed shown when overridden</p>
+            <div class="score-row"><span style="width:150px">Fieldgate Produce</span><strong style="font-variant-numeric:tabular-nums">9</strong><div class="score-track"><span style="width:90%"></span></div><span class="chip chip-success">High</span></div>
+            <div class="score-row"><span style="width:150px">Harbour Fresh</span><strong style="font-variant-numeric:tabular-nums">7</strong><span class="ai-note">(AI: 9)</span><div class="score-track"><span style="width:70%"></span></div><span class="chip chip-warning">Medium</span></div>
+          </div>
+        </div>
+        <span class="label-xs" style="margin-top:24px">Extraction review rows — EVT-04</span>
+        <div class="table-wrap">
+          <div class="xfield unconfirmed"><span class="amber-dot"></span><span class="f-label">Payment terms</span><span style="font-weight:500">45 days from invoice</span><span class="chip chip-danger">Low</span>
+            <div class="f-actions"><div class="tt"><button class="btn btn-ghost btn-icon btn-sm" aria-label="View source passage"><svg class="icon icon-sm"><use href="#i-search"/></svg></button><span class="tip">View source — page 4</span></div><button class="btn btn-secondary btn-sm">Edit</button><button class="btn btn-primary btn-sm">Confirm</button></div></div>
+          <div class="xfield unconfirmed"><span class="amber-dot"></span><span class="f-label">Minimum order</span><span style="font-weight:500">£250.00 per delivery</span><span class="chip chip-warning">Medium</span>
+            <div class="f-actions"><button class="btn btn-secondary btn-sm">Edit</button><button class="btn btn-primary btn-sm">Confirm</button></div></div>
+          <div class="xfield"><svg class="icon icon-sm green-check" style="stroke-width:2.2"><use href="#i-check"/></svg><span class="f-label">Delivery days</span><span>Tuesday, Thursday, Saturday — before 07:00</span><span class="chip chip-success">High</span>
+            <div class="f-actions"><span style="font-size:.75rem;color:var(--color-text-secondary)">Confirmed by Priya · 2 h ago</span></div></div>
+        </div>
+      </section>
+
+      <!-- ============ BANNERS / TOASTS / MODALS ============ -->
+      <section class="section"><h2>Banner · toasts · modals</h2>
+        <div class="banner" style="margin-bottom:20px"><svg class="icon"><use href="#i-warn"/></svg>
+          <span><strong>Deadline passed</strong> — 4 of 9 suppliers submitted.</span>
+          <div class="b-actions"><button class="btn btn-secondary btn-sm">Proceed with received</button><button class="btn btn-secondary btn-sm">Extend deadline</button><button class="btn btn-secondary btn-sm">Chase individually</button></div>
+        </div>
+        <div class="row">
+          <button class="btn btn-secondary" onclick="spawnToast('info')">Show info toast</button>
+          <button class="btn btn-secondary" onclick="spawnToast('success')">Show success toast</button>
+          <button class="btn btn-secondary" onclick="spawnToast('danger')">Show error toast</button>
+          <button class="btn btn-secondary" onclick="openModal('modalSimple')">Simple confirm</button>
+          <button class="btn btn-secondary" onclick="openModal('modalTyped')">Typed confirmation</button>
+        </div>
+      </section>
+
+      <!-- ============ EMPTY STATES ============ -->
+      <section class="section"><h2>Empty states — the three variants</h2>
+        <div class="stack">
+          <div class="empty"><h3>Contracts</h3><p>Contracts you award or import are tracked here, with alerts before every notice deadline.</p><button class="btn btn-primary"><svg class="icon icon-sm"><use href="#i-plus"/></svg>Add a contract</button></div>
+          <div class="empty"><p style="margin-bottom:12px">No results for these filters.</p><button class="btn btn-secondary btn-sm">Clear filters</button></div>
+          <div class="empty"><p>You can see evaluations for your assigned sites. Contact your admin if you need wider access.</p></div>
+        </div>
+      </section>
+
+      <!-- ============ SKELETONS ============ -->
+      <section class="section"><h2>Loading — skeletons, never full-page spinners</h2>
+        <div class="table-wrap">
+          <div class="skel-row"><div class="skel" style="width:180px;height:14px"></div><div class="skel" style="width:90px;height:14px"></div><div class="skel" style="width:70px;height:14px;margin-left:auto"></div></div>
+          <div class="skel-row"><div class="skel" style="width:220px;height:14px"></div><div class="skel" style="width:70px;height:14px"></div><div class="skel" style="width:70px;height:14px;margin-left:auto"></div></div>
+          <div class="skel-row"><div class="skel" style="width:150px;height:14px"></div><div class="skel" style="width:110px;height:14px"></div><div class="skel" style="width:70px;height:14px;margin-left:auto"></div></div>
+        </div>
+      </section>
+
+      <p style="margin-top:56px;font-size:.75rem;color:var(--color-text-secondary)">
+        Mock preview only — icons are inline SVG stand-ins; production uses primeicons 8.0.0 per the Tech Stack doc. All light and dark text/background pairs computationally verified against WCAG 2.1 AA on 18/07/2026.
+      </p>
+    </main>
+  </div>
+</div>
+
+<!-- ============ OVERLAYS ============ -->
+<div class="toast-region" id="toastRegion" aria-live="polite"></div>
+
+<div class="modal-backdrop" id="modalSimple">
+  <div class="modal sm" role="dialog" aria-modal="true">
+    <h3>Archive this draft?</h3>
+    <p>The draft moves out of your evaluations list. You can restore it from archived items at any time.</p>
+    <div class="m-actions"><button class="btn btn-secondary" onclick="closeModal('modalSimple')">Cancel</button><button class="btn btn-primary" onclick="closeModal('modalSimple')">Archive draft</button></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modalTyped">
+  <div class="modal md" role="dialog" aria-modal="true">
+    <h3>Archive Harbour Linen Services?</h3>
+    <p>This supplier has 1 active contract. Archiving hides them from new evaluations but keeps the contract live. Renewal alerts continue.</p>
+    <div class="field" style="max-width:none;margin-top:16px"><label>Type ARCHIVE to confirm</label><input class="input" id="typedInput" autocomplete="off"></div>
+    <div class="m-actions"><button class="btn btn-secondary" onclick="closeModal('modalTyped')">Cancel</button><button class="btn btn-destructive" id="typedConfirm" disabled onclick="closeModal('modalTyped')">Archive supplier</button></div>
+  </div>
+</div>
+
+<script>
+/* Theme toggle — in-memory only */
+const toggle=document.getElementById('themeToggle');
+const themeIcon=document.getElementById('themeIcon').querySelector('use');
+const themeLabel=document.getElementById('themeLabel');
+toggle.addEventListener('click',()=>{
+  const root=document.documentElement;
+  const dark=root.getAttribute('data-theme')==='dark';
+  root.setAttribute('data-theme',dark?'light':'dark');
+  themeIcon.setAttribute('href',dark?'#i-moon':'#i-sun');
+  themeLabel.textContent=dark?'Dark':'Light';
+  toggle.setAttribute('aria-label',dark?'Switch to dark mode':'Switch to light mode');
+});
+
+/* Dropdown */
+const dd=document.getElementById('dd1');
+dd.querySelector('.dd-btn').addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('open')});
+dd.querySelectorAll('.dd-item').forEach(it=>it.addEventListener('click',()=>{
+  dd.querySelectorAll('.dd-item').forEach(x=>x.classList.remove('selected'));
+  it.classList.add('selected');
+  const v=document.getElementById('dd1val');v.textContent=it.textContent;v.classList.remove('ph');
+  dd.classList.remove('open');
+}));
+document.addEventListener('click',()=>dd.classList.remove('open'));
+
+/* Toasts */
+const toastCopy={
+  info:{t:'4 of 9 submissions ready for review — Autumn F&B sourcing',i:'#i-info'},
+  success:{t:'Contract awarded — Fieldgate Produce Ltd',i:'#i-check'},
+  danger:{t:'Something went wrong on our side. Your work is saved — try again in a moment.',i:'#i-warn'}
+};
+function spawnToast(kind){
+  const region=document.getElementById('toastRegion');
+  if(region.children.length>=3)region.firstElementChild.remove();
+  const el=document.createElement('div');
+  el.className='toast '+(kind==='info'?'':kind);
+  el.innerHTML='<svg class="icon icon-sm"><use href="'+toastCopy[kind].i+'"/></svg><span>'+toastCopy[kind].t+'</span>';
+  region.appendChild(el);
+  setTimeout(()=>el.remove(),kind==='danger'?8000:5000);
+}
+
+/* Modals */
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.modal-backdrop').forEach(b=>{
+  if(b.id!=='modalTyped')b.addEventListener('click',e=>{if(e.target===b)b.classList.remove('open')});
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')document.querySelectorAll('.modal-backdrop.open').forEach(b=>{if(b.id!=='modalTyped')b.classList.remove('open')});
+});
+document.getElementById('typedInput').addEventListener('input',e=>{
+  document.getElementById('typedConfirm').disabled=e.target.value!=='ARCHIVE';
+});
+
+/* Loading button demo */
+const lb=document.getElementById('loadingDemo');
+lb.addEventListener('click',()=>{
+  const w=lb.offsetWidth;lb.style.width=w+'px';lb.disabled=true;
+  const orig=lb.innerHTML;lb.innerHTML='<span class="spinner"></span>';
+  setTimeout(()=>{lb.innerHTML=orig;lb.disabled=false;lb.style.width=''},1800);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.env
+.env.local
+.env.*.local
+docs/keyData.txt
+
+node_modules/
+.nuxt/
+.output/
+dist/
+.vercel/
+
+*.log
+.DS_Store
