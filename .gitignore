@@ -1,6 +1,5 @@
-.env
-.env.local
-.env.*.local
+.env*
+!.env.example
 docs/keyData.txt
 
 node_modules/
@@ -11,5 +10,3 @@ dist/
 
 *.log
 .DS_Store
-.vercel
-.env*
