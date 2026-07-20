@@ -10,13 +10,13 @@
 // source. So "not signed in" surfaces here as `userId: null` with a normal
 // 200, exactly like @nuxtjs/supabase's own plugin does internally
 // (`serverSupabaseUser(event).catch(() => null)`), rather than a 500.
+//
+// toSessionResponse() lives in server/utils/auth/session.ts (Nitro
+// auto-imports server/utils/**, same as Step 6's toHealthResponse) so it's
+// unit-testable without a real Nitro/H3 event or Supabase client.
 import { serverSupabaseUser } from '#supabase/server'
-
-export interface SessionResponse {
-  userId: string | null
-}
 
 export default defineEventHandler(async (event): Promise<SessionResponse> => {
   const user = await serverSupabaseUser(event)
-  return { userId: user?.sub ?? null }
+  return toSessionResponse(user)
 })
