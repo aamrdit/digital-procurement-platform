@@ -5,6 +5,18 @@ import { AppPreset } from './app/theme/preset'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2026-07-19',
+  // No explicit `nitro.preset` here (Tech Stack §13 names `vercel`, but doesn't
+  // mandate an explicit config key). Verified against nitropack@2.13.4's own
+  // resolution logic (node_modules/nitropack/dist/presets/_resolve.mjs): when
+  // `preset` is unset, Nitro falls back to std-env's `provider` detection,
+  // which reads the `VERCEL` env var that Vercel's build system sets on every
+  // build. So on Vercel this resolves to the `vercel` preset automatically
+  // ("zero-config providers" — matches Nitro's own deployment docs); locally
+  // (no `VERCEL` env var) it resolves to `node-server`, confirmed by a local
+  // `pnpm build` showing `preset: node-server`. Setting `preset: 'vercel'`
+  // explicitly would only be needed to force that preset in an environment
+  // that isn't Vercel (e.g. reproducing prod output locally) — not required
+  // for real deploys, so left unset to avoid hardcoding an environment.
   devtools: { enabled: true },
   modules: ['@nuxt/eslint', '@primevue/nuxt-module', '@nuxtjs/supabase'],
   css: ['~/assets/css/main.css', 'primeicons/primeicons.css'],

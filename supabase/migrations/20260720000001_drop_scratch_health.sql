@@ -1,0 +1,16 @@
+-- Step 8 (Phase 1, "walking skeleton"): removes Step 6's scratch `health`
+-- table now that the walking skeleton is proven end-to-end with real auth
+-- (see server/api/session.get.ts + app/pages/auth/signin.vue).
+--
+-- The table's RLS policy (health_select) and the anon/authenticated GRANT
+-- are dropped implicitly along with the table itself — nothing else in this
+-- migration references `health`.
+--
+-- `IF EXISTS`: the original 20260719000001_scratch_health.sql migration file
+-- that created this table has been deleted from supabase/migrations (not
+-- just superseded), so a fresh `supabase db reset` replaying migration
+-- history from scratch never creates `health` in the first place. This
+-- migration must still be a no-op in that case, so migration history stays
+-- honest for both the already-applied local stack and any future clean
+-- reset.
+DROP TABLE IF EXISTS health;
