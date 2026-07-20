@@ -34,21 +34,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      health: {
-        Row: {
-          checked_at: string
-          id: number
-        }
-        Insert: {
-          checked_at?: string
-          id?: number
-        }
-        Update: {
-          checked_at?: string
-          id?: number
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
